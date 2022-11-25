@@ -60,17 +60,7 @@ public class ClienteController {
 			@PathVariable Integer id,
 			@RequestBody Cliente cliente) {
 		
-		if(! clienteRepository.existsById(id))
-			return new ResponseEntity<Cliente>(HttpStatus.NOT_FOUND);
-		
-		try {
-			cliente.setId(id);
-			clienteRepository.save(cliente);
-			
-			return new ResponseEntity<Cliente>(cliente, HttpStatus.OK);
-		} catch (Exception e) {
-			throw new ApiException("Erro ao atualizar o cliente.");
-		}
+		return clienteService.atualizar(id, cliente);
 	}
 	
 	@DeleteMapping("/{id}")
