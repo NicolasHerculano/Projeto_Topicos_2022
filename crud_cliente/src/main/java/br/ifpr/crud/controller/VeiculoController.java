@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +22,7 @@ import br.ifpr.crud.repository.VeiculoRepository;
 import br.ifpr.crud.service.VeiculoService;
 
 @RestController
-@RequestMapping("/veiculo")
+@RequestMapping("/veiculos")
 public class VeiculoController {
 	
 	@Autowired
@@ -30,11 +31,13 @@ public class VeiculoController {
 	@Autowired
 	private VeiculoService veiculoService;
 	
+	@CrossOrigin
 	@GetMapping
 	public List<Veiculo> listar() {
 		return veiculoRepository.findAll();
 	}
 	
+	@CrossOrigin
 	@GetMapping("/{id}")
 	public ResponseEntity<Veiculo> buscar(
 			@PathVariable Integer id) {
@@ -48,6 +51,7 @@ public class VeiculoController {
 		return new ResponseEntity<Veiculo>(HttpStatus.NOT_FOUND);
 	}
 	
+	@CrossOrigin
 	@PostMapping
 	public ResponseEntity<Veiculo> inserir(
 			@RequestBody Veiculo veiculo) {
@@ -55,24 +59,15 @@ public class VeiculoController {
 		return veiculoService.inserir(veiculo);
 	}
 	
+	@CrossOrigin
 	@PutMapping("/{id}")
 	public ResponseEntity<Veiculo> atualizar(
 			@PathVariable Integer id,
 			@RequestBody Veiculo veiculo) {
-		
-		if(! veiculoRepository.existsById(id))
-			return new ResponseEntity<Veiculo>(HttpStatus.NOT_FOUND);
-		
-		try {
-			veiculo.setId(id);
-			veiculoRepository.save(veiculo);
-			
-			return new ResponseEntity<Veiculo>(veiculo, HttpStatus.OK);
-		} catch (Exception e) {
-			throw new ApiException("Erro ao atualizar o cliente.");
-		}
+		return veiculoService.atualizar(id, veiculo);
 	}
 	
+	@CrossOrigin
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> remover(@PathVariable Integer id) {
 		if(! veiculoRepository.existsById(id))

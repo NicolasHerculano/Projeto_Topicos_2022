@@ -27,7 +27,7 @@ public class Veiculo {
 	private String fabricante;
 	
 	@Column(name = "ano_fabricacao")
-	private Integer anoFabricacao;
+	private String anoFabricacao;
 	
 	public Integer getId() {
 		return id;
@@ -61,11 +61,11 @@ public class Veiculo {
 		this.fabricante = fabricante;
 	}
 
-	public Integer getAnoFabricacao() {
+	public String getAnoFabricacao() {
 		return anoFabricacao;
 	}
 
-	public void setAnoFabricacao(Integer anoFabricacao) {
+	public void setAnoFabricacao(String anoFabricacao) {
 		this.anoFabricacao = anoFabricacao;
 	}
 
